@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusEnum {
+  NOT_DONE
+  DONE
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  name            String
+  nickname        String    @unique
+  password        String
+  spendingLimits  SpendingLimits[]
+  accounts        Account[]
+  creditCards     CreditCard[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime?
+  deleteddAt      DateTime?
+}
+
+model Category {
+  id             Int          @id @default(autoincrement())
+  name           String
+  icon           String?
+  isExpense      Boolean
+  subCategories  SubCategory[]
+  spendingLimits SpendingLimits[]
+  posting        Posting[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?
+  deleteddAt     DateTime?
+}
+
+model SubCategory {
+  id          Int          @id @default(autoincrement())
+  name        String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?
+  deleteddAt  DateTime?
+  categoryId  Int
+
+  category    Category @relation(fields: [categoryId], references: [id])
+}
+
+model Tag {
+  id          Int          @id @default(autoincrement())
+  name        String
+  posting     Posting[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?
+  deleteddAt  DateTime?
+}
+
+model SpendingLimits {
+  id          Int          @id @default(autoincrement())
+  value       Float
+  categoryId  Int
+  userId      Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?
+  deleteddAt  DateTime?
+
+  user        User @relation(fields: [userId], references: [id])
+  category    Category @relation(fields: [categoryId], references: [id])
+}
+
+model Account {
+  id            Int          @id @default(autoincrement())
+  name          String
+  balance       Float
+  icon          String?
+  hideValue     Boolean
+  userId        Int
+  creditCards   CreditCard[]
+  postings      Posting[]
+  sourceAccount Transfer[]   @relation("sourceAccount")
+  targetAccount Transfer[] @relation("targetAccount")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime?
+  deleteddAt    DateTime?
+
+  user          User @relation(fields: [userId], references: [id])
+}
+
+model CreditCard {
+  id               Int          @id @default(autoincrement())
+  name             String
+  icon             String?
+  limit            Float
+  closingDate      DateTime
+  expirationDate   DateTime
+  currentInvoice   Float
+  userId           Int
+  accountId        Int
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime?
+  deleteddAt       DateTime?
+
+  user             User @relation(fields: [userId], references: [id])
+  account          Account @relation(fields: [accountId], references: [id])
+}
+
+model Posting {
+  id             Int          @id @default(autoincrement())
+  description    String
+  value          Float
+  categoryId     Int
+  accountId      Int
+  date           DateTime
+  tags           Tag[]
+  observations   String
+  isExpense      Boolean
+  status         StatusEnum
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime?
+  deleteddAt     DateTime?
+
+  paidWith Account @relation(fields: [accountId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+}
+
+model Transfer {
+  id                Int          @id @default(autoincrement())
+  description       String
+  sourceAccountId   Int
+  targetAccountId   Int
+  date              DateTime
+  observations      String
+  status            StatusEnum
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime?
+  deleteddAt        DateTime?
+
+  sourceAccount Account @relation("sourceAccount", fields: [sourceAccountId], references: [id])
+  targetAccount Account @relation("targetAccount", fields: [targetAccountId], references: [id])
+}
