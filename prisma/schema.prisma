@@ -8,9 +8,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// TODO: update URL for standardization with automation of table generation
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_PRISMA")
 }
 
 enum StatusEnum {
@@ -32,49 +33,52 @@ model User {
 }
 
 model Category {
-  id             Int          @id @default(autoincrement())
-  name           String
-  icon           String?
-  isExpense      Boolean
-  subCategories  SubCategory[]
-  spendingLimits SpendingLimits[]
-  posting        Posting[]
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime?
-  deleteddAt     DateTime?
+  id                     Int          @id @default(autoincrement())
+  name                   String
+  icon                   String?
+  isExpense              Boolean
+  subCategories          SubCategory[]
+  spendingLimits         SpendingLimits[]
+  posting                Posting[]
+  relationshipCategory   RelationshipCategory[]
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime?
+  deleteddAt             DateTime?
 }
 
 model SubCategory {
-  id          Int          @id @default(autoincrement())
-  name        String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime?
-  deleteddAt  DateTime?
-  categoryId  Int
+  id                     Int          @id @default(autoincrement())
+  name                   String
+  relationshipCategory   RelationshipCategory[]
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime?
+  deleteddAt             DateTime?
+  categoryId             Int
 
-  category    Category @relation(fields: [categoryId], references: [id])
+  category               Category @relation(fields: [categoryId], references: [id])
 }
 
 model Tag {
   id          Int          @id @default(autoincrement())
   name        String
-  posting     Posting[]
+  transaction Transaction[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime?
   deleteddAt  DateTime?
 }
 
 model SpendingLimits {
-  id          Int          @id @default(autoincrement())
-  value       Float
-  categoryId  Int
-  userId      Int
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime?
-  deleteddAt  DateTime?
+  id                     Int          @id @default(autoincrement())
+  value                  Float
+  categoryId             Int
+  userId                 Int
+  relationshipCategory   RelationshipCategory?
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime?
+  deleteddAt             DateTime?
 
-  user        User @relation(fields: [userId], references: [id])
-  category    Category @relation(fields: [categoryId], references: [id])
+  user                   User @relation(fields: [userId], references: [id])
+  category               Category @relation(fields: [categoryId], references: [id])
 }
 
 model Account {
@@ -87,7 +91,7 @@ model Account {
   creditCards   CreditCard[]
   postings      Posting[]
   sourceAccount Transfer[]   @relation("sourceAccount")
-  targetAccount Transfer[] @relation("targetAccount")
+  targetAccount Transfer[]   @relation("targetAccount")
   createdAt     DateTime     @default(now())
   updatedAt     DateTime?
   deleteddAt    DateTime?
@@ -120,10 +124,10 @@ model Posting {
   categoryId     Int
   accountId      Int
   date           DateTime
-  tags           Tag[]
   observations   String
   isExpense      Boolean
   status         StatusEnum
+  transaction    Transaction[]
   createdAt      DateTime     @default(now())
   updatedAt      DateTime?
   deleteddAt     DateTime?
@@ -140,10 +144,33 @@ model Transfer {
   date              DateTime
   observations      String
   status            StatusEnum
+  transaction    Transaction[]
   createdAt         DateTime     @default(now())
   updatedAt         DateTime?
   deleteddAt        DateTime?
 
   sourceAccount Account @relation("sourceAccount", fields: [sourceAccountId], references: [id])
   targetAccount Account @relation("targetAccount", fields: [targetAccountId], references: [id])
+}
+
+model Transaction {
+  id            Int          @id @default(autoincrement())
+  tagId         Int
+  postingId     Int?
+  transferId    Int?
+
+  tag           Tag @relation(fields: [tagId], references: [id])
+  posting       Posting? @relation(fields: [postingId], references: [id])
+  transfer      Transfer? @relation(fields: [transferId], references: [id])
+}
+
+model RelationshipCategory {
+  id                 Int          @id @default(autoincrement())
+  spendingLimitsId   Int          @unique
+  categoryId         Int?
+  subCategoryId      Int?
+
+  spendingLimits     SpendingLimits @relation(fields: [spendingLimitsId], references: [id])
+  category           Category? @relation(fields: [categoryId], references: [id])
+  subCategory        SubCategory? @relation(fields: [subCategoryId], references: [id])
 }

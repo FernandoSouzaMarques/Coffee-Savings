@@ -13,7 +13,7 @@ RUN npm install
 # Copy all application code into the container
 COPY . .
 
-# Run Prisma migrations
+# Run Prisma migrations - TODO: implement automation to run migrations when uploading images
 # RUN npx prisma migrate deploy
 
 # Build the Next.js application
