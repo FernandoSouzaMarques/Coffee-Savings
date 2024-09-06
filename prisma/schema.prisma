@@ -23,6 +23,7 @@ model User {
   id              Int       @id @default(autoincrement())
   name            String
   nickname        String    @unique
+  avatar            String
   password        String
   spendingLimits  SpendingLimits[]
   accounts        Account[]
