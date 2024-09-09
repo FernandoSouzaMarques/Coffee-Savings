@@ -10,7 +10,9 @@
     "migrations": "npx prisma migrate dev --name init"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "@prisma/client": "^5.19.1",
+    "heroicons": "^2.1.5",
     "next": "14.2.7",
     "pg": "^8.12.0",
     "react": "^18",

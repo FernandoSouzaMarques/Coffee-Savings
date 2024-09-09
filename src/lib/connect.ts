@@ -1,11 +1,11 @@
 import { Client } from 'pg';
 
-const client = new Client({
+const connect = new Client({
   connectionString: process.env.DATABASE_URL,
 });
 
-client.connect()
+connect.connect()
   .then(() => console.info('Conectado ao PostgreSQL'))
   .catch((err: Error) => console.error('Erro de conexão com PostgreSQL:', err));
 
-export default client;
+export default connect;
