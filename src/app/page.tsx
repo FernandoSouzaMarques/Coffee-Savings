@@ -1,3 +1,5 @@
+"use server";
+
 import { PagesEnum } from "@/enum/Pages";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
@@ -9,8 +11,6 @@ interface IUserProfile {
   name: string;
   avatar: string;
 }
-
-const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 async function getUsers(): Promise<IUserProfile[]> {
   return await client("/users");
