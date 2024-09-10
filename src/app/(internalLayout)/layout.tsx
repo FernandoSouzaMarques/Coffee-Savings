@@ -8,7 +8,7 @@ export default function InternalLayout({
   return (
     <div className="flex">
       <Sidebar avatar="" />
-      <div className="p-10 w-full">
+      <div className="p-10 w-full bg-logo bg-center bg-no-repeat">
         {children}
       </div>
     </div>
