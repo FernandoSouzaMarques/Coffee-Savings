@@ -1,8 +1,9 @@
 "use client";
 
-import { PagesEnum } from "@/enum/Pages";
-import { useRouter } from "next/navigation";
 import { FC } from "react";
+import { useRouter } from "next/navigation";
+import { PagesEnum } from "@/enum/Pages";
+import { useCookies } from "@/app/hooks/useCookies";
 
 interface IProfileSelector {
   id: string;
@@ -15,9 +16,11 @@ export const ProfileSelector: FC<IProfileSelector> = ({
   avatar,
   name,
 }): JSX.Element => {
+  const [setCookies] = useCookies();
   const { push } = useRouter();
 
   function handleSelectProfile(id: string) {
+    setCookies("userId", id);
     void push(PagesEnum.DASHBOARD);
   }
   return (

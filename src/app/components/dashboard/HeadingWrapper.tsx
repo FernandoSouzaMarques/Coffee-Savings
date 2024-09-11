@@ -1,17 +1,20 @@
 "use client";
 
+import { FC } from "react";
+import { format, getHours } from "date-fns";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Heading } from "@/app/components/Heading";
-import { format, getHours } from "date-fns";
 
-const profile = "John Doe";
+interface IHeadingWrapperProps {
+  name: string;
+}
 
-export const HeadingWrapper = () => {
+export const HeadingWrapper: FC<IHeadingWrapperProps> = ({ name }) => {
   const today = new Date();
 
   function getTitle() {
     const partOfDay = getPartOfDay();
-    return `${partOfDay}, ${profile}`;
+    return `${partOfDay}, ${name}`;
   }
 
   function action() {

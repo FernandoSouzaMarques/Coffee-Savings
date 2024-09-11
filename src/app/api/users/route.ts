@@ -1,15 +1,21 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 import database from "@/lib/connect";
-import User from '@/models/UserModel';
 
-export async function GET() {
+const rawQuery = 'SELECT id, name, nickname, avatar FROM public."User"';
+
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const userId = url.searchParams.get("id");
+
   try {
-    const response = await database.query('SELECT id, name, nickname, avatar FROM public."User"');
-    const _response = await User.query()
-    
-    return NextResponse.json(_response);
-  }
-  catch(err) {
-    return NextResponse.json({ error: 'Erro ao listar usuários' }, { status: 500 })
+    const response = await database.query(
+      `${rawQuery} ${userId ? `WHERE id = ${userId}` : ""}`
+    );
+    return NextResponse.json(!!userId ? response.rows[0] : response.rows);
+  } catch (err) {
+    return NextResponse.json(
+      { error: "Erro ao trazer os dados do(s) usuário(s)" },
+      { status: 500 }
+    );
   }
 }

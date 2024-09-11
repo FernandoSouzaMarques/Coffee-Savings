@@ -3,7 +3,7 @@
 import { PagesEnum } from "@/enum/Pages";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { ProfileSelector } from "@/app/components/ProfileSelector";
+import { ProfileList } from "@/app/components/ProfileList";
 import { client } from "@/config/client";
 
 interface IUserProfile {
@@ -23,13 +23,7 @@ export default async function Home() {
     <main className="flex flex-col items-center justify-center min-h-screen relative">
       <h1 className="text-3xl text-center font-bold">Who will access it?</h1>
 
-      <ul className="flex justify-center items-center space-x-10 mt-10">
-        {profiles.map((profile) => (
-          <li key={profile.id}>
-            <ProfileSelector {...profile} />
-          </li>
-        ))}
-      </ul>
+      <ProfileList list={profiles} />
       <Link href={PagesEnum.ADD_PROFILE} className="mt-10">
         <span className="leading-[0] text-7xl flex justify-center items-center border-2 border-white rounded-full w-20 aspect-square">
           <span className="sr-only">Add profile</span>
