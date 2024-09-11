@@ -26,7 +26,7 @@ export const ProfileList: FC<IProfileList> = ({ list }): JSX.Element => {
 
   if (list.length === 1) {
     selectOnlyProfile();
-    push(PagesEnum.DASHBOARD);
+    // push(PagesEnum.DASHBOARD);
   }
 
   return (

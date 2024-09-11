@@ -1,12 +1,18 @@
-import { HeadingWrapper } from "@/app/components/tags/HeadingWrapper";
 import { Fragment } from "react";
+import { HeadingWrapper } from "@/app/components/tags/HeadingWrapper";
+import { ListTags } from "@/app/components/tags/ListTags";
+import { Dialog } from "@/app/components/Dialog";
+import { AddTagForm } from "@/app/components/tags/AddTagForm";
 
-export default function Tags() {
+export default async function Tags() {
   return (
     <Fragment>
       <HeadingWrapper />
       <div className="mt-10">
-        <p>content...</p>
+        <ListTags />
+        <Dialog title="Create a new tag">
+          <AddTagForm />
+        </Dialog>
       </div>
     </Fragment>
   );
