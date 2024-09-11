@@ -1,30 +1,37 @@
 "use client";
 
-import { tagModalAtom } from "@/store/atoms/tagModalAtom";
 import {
   Description,
   Dialog as DialogHeadless,
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { FC, PropsWithChildren } from "react";
-import { useRecoilState } from "recoil";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
 
 interface IDialogProps extends PropsWithChildren {
   title: string;
   description?: string;
+  open: boolean,
+  onClose: () => void;
 }
 
 export const Dialog: FC<IDialogProps> = ({
   children,
   title,
   description,
+  open,
+  onClose
 }): JSX.Element => {
-  const [isOpen, setIsOpen] = useRecoilState(tagModalAtom);
+  const [isOpen, setIsOpen] = useState(open);
 
   function handleClose() {
     setIsOpen(false);
+    onClose();
   }
+
+  useEffect(() => {
+    setIsOpen(open);
+  }, [open])
 
   return (
     <>
