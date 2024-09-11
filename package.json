@@ -10,6 +10,7 @@
     "migrations": "npx prisma migrate dev --name init"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.6",
     "@heroicons/react": "^2.1.5",
     "@prisma/client": "^5.19.1",
     "clsx": "^2.1.1",
@@ -18,7 +19,8 @@
     "next": "14.2.7",
     "pg": "^8.12.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@types/node": "^20",
