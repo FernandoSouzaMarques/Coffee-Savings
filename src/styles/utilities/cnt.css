@@ -1,0 +1,4 @@
+.cnt {
+  @apply mx-auto;
+  max-width: 48.75rem;
+}
