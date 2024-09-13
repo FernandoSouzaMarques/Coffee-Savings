@@ -10,6 +10,7 @@ import { AddProfileModal } from "@/app/components/AddProfileModal";
 interface IUserProfile {
   id: string;
   name: string;
+  nickname: string;
   avatar: string;
 }
 
