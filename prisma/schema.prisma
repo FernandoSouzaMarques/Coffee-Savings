@@ -73,7 +73,7 @@ model SpendingLimits {
   value                  Float
   categoryId             Int
   userId                 Int
-  relationshipCategory   RelationshipCategory?
+  relationshipCategory   RelationshipCategory[]
   createdAt              DateTime     @default(now())
   updatedAt              DateTime?
   deleteddAt             DateTime?
@@ -119,19 +119,20 @@ model CreditCard {
 }
 
 model Posting {
-  id             Int          @id @default(autoincrement())
-  description    String
-  value          Float
-  categoryId     Int
-  accountId      Int
-  date           DateTime
-  observations   String
-  isExpense      Boolean
-  status         StatusEnum
-  transaction    Transaction[]
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime?
-  deleteddAt     DateTime?
+  id                     Int          @id @default(autoincrement())
+  description            String
+  value                  Float
+  categoryId             Int
+  accountId              Int
+  date                   DateTime
+  observations           String
+  isExpense              Boolean
+  status                 StatusEnum
+  transaction            Transaction[]
+  relationshioCategory   RelationshipCategory[]
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime?
+  deleteddAt             DateTime?
 
   paidWith Account @relation(fields: [accountId], references: [id])
   category Category @relation(fields: [categoryId], references: [id])
@@ -167,11 +168,13 @@ model Transaction {
 
 model RelationshipCategory {
   id                 Int          @id @default(autoincrement())
-  spendingLimitsId   Int          @unique
+  spendingLimitsId   Int?         
+  postingId          Int?         
   categoryId         Int?
   subCategoryId      Int?
 
-  spendingLimits     SpendingLimits @relation(fields: [spendingLimitsId], references: [id])
+  posting            Posting? @relation(fields: [postingId], references: [id])
+  spendingLimits     SpendingLimits? @relation(fields: [spendingLimitsId], references: [id])
   category           Category? @relation(fields: [categoryId], references: [id])
   subCategory        SubCategory? @relation(fields: [subCategoryId], references: [id])
 }

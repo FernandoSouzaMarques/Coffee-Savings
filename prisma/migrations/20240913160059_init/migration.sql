@@ -7,7 +7,7 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "nickname" TEXT NOT NULL,
     "avatar" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3),
     "deleteddAt" TIMESTAMP(3),
@@ -144,7 +144,8 @@ CREATE TABLE "Transaction" (
 -- CreateTable
 CREATE TABLE "RelationshipCategory" (
     "id" SERIAL NOT NULL,
-    "spendingLimitsId" INTEGER NOT NULL,
+    "spendingLimitsId" INTEGER,
+    "postingId" INTEGER,
     "categoryId" INTEGER,
     "subCategoryId" INTEGER,
 
@@ -153,9 +154,6 @@ CREATE TABLE "RelationshipCategory" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_nickname_key" ON "User"("nickname");
-
--- CreateIndex
-CREATE UNIQUE INDEX "RelationshipCategory_spendingLimitsId_key" ON "RelationshipCategory"("spendingLimitsId");
 
 -- AddForeignKey
 ALTER TABLE "SubCategory" ADD CONSTRAINT "SubCategory_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -197,7 +195,10 @@ ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_postingId_fkey" FOREIGN KE
 ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_transferId_fkey" FOREIGN KEY ("transferId") REFERENCES "Transfer"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "RelationshipCategory" ADD CONSTRAINT "RelationshipCategory_spendingLimitsId_fkey" FOREIGN KEY ("spendingLimitsId") REFERENCES "SpendingLimits"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "RelationshipCategory" ADD CONSTRAINT "RelationshipCategory_postingId_fkey" FOREIGN KEY ("postingId") REFERENCES "Posting"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "RelationshipCategory" ADD CONSTRAINT "RelationshipCategory_spendingLimitsId_fkey" FOREIGN KEY ("spendingLimitsId") REFERENCES "SpendingLimits"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "RelationshipCategory" ADD CONSTRAINT "RelationshipCategory_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
