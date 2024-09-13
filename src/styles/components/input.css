@@ -1,0 +1,22 @@
+input {
+  @apply
+  flex
+  bg-base-500
+  sm:text-sm
+  rounded-lg
+  ring
+  ring-transparent
+  focus:outline-none
+  focus:ring-info
+  focus:ring-2
+  w-full
+  rounded-l-lg
+  p-4
+  text-white
+  placeholder:text-gray-600
+  outline-none;
+}
+
+input[type="password"]::-ms-reveal {
+  filter: invert(100%);
+}

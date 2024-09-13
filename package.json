@@ -13,11 +13,13 @@
     "@headlessui/react": "^2.1.6",
     "@heroicons/react": "^2.1.5",
     "@prisma/client": "^5.19.1",
+    "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "heroicons": "^2.1.5",
     "next": "14.2.7",
     "pg": "^8.12.0",
+    "postcss-import": "^16.1.0",
     "react": "^18",
     "react-dom": "^18",
     "recoil": "^0.7.7"
