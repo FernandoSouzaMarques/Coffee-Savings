@@ -4,6 +4,7 @@ import { FC } from "react";
 import { useRouter } from "next/navigation";
 import { PagesEnum } from "@/enum/Pages";
 import { useCookies } from "@/app/hooks/useCookies";
+import { Icon } from "@/app/components/Icon";
 
 interface IProfileSelector {
   id: string;
@@ -16,7 +17,7 @@ export const ProfileSelector: FC<IProfileSelector> = ({
   avatar,
   nickname
 }): JSX.Element => {
-  const [setCookies] = useCookies();
+  const {setCookies} = useCookies();
   const { push } = useRouter();
 
   function handleSelectProfile(id: string) {
@@ -29,9 +30,7 @@ export const ProfileSelector: FC<IProfileSelector> = ({
       className="flex flex-col items-center justify-between"
       onClick={() => handleSelectProfile(id)}
     >
-      <picture className="flex bg-error rounded-full overflow-hidden w-20 aspect-square">
-        <img src={avatar} alt="" />
-      </picture>
+      <Icon icon={avatar} size="lg" />
       <span className="inline-block mt-2 font-bold">{nickname}</span>
     </button>
   );

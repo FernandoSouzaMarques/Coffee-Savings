@@ -16,7 +16,7 @@ interface IProfileList {
 }
 
 export const ProfileList: FC<IProfileList> = ({ list }): JSX.Element => {
-  const [setCookies] = useCookies();
+  const {setCookies} = useCookies();
 
   function selectOnlyProfile() {
     setCookies("userId", list[0].id);

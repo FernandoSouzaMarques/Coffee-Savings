@@ -25,5 +25,5 @@ export const useCookies = () => {
     return "";
   };
 
-  return [setCookies, getCookie];
+  return {setCookies, getCookie};
 };
