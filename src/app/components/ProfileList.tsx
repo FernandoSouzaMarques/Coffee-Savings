@@ -1,14 +1,13 @@
 "use client";
 
 import { FC } from "react";
-import { useRouter } from "next/navigation";
 import { ProfileSelector } from "@/app/components/ProfileSelector";
 import { useCookies } from "@/app/hooks/useCookies";
-import { PagesEnum } from "@/enum/Pages";
 
 interface IProfile {
   id: string;
   name: string;
+  nickname: string;
   avatar: string;
 }
 
@@ -18,7 +17,6 @@ interface IProfileList {
 
 export const ProfileList: FC<IProfileList> = ({ list }): JSX.Element => {
   const [setCookies] = useCookies();
-  const { push } = useRouter();
 
   function selectOnlyProfile() {
     setCookies("userId", list[0].id);
@@ -26,7 +24,6 @@ export const ProfileList: FC<IProfileList> = ({ list }): JSX.Element => {
 
   if (list.length === 1) {
     selectOnlyProfile();
-    // push(PagesEnum.DASHBOARD);
   }
 
   return (

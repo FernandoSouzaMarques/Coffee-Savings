@@ -8,13 +8,13 @@ import { useCookies } from "@/app/hooks/useCookies";
 interface IProfileSelector {
   id: string;
   avatar: string;
-  name: string;
+  nickname: string;
 }
 
 export const ProfileSelector: FC<IProfileSelector> = ({
   id,
   avatar,
-  name,
+  nickname
 }): JSX.Element => {
   const [setCookies] = useCookies();
   const { push } = useRouter();
@@ -26,13 +26,13 @@ export const ProfileSelector: FC<IProfileSelector> = ({
   return (
     <button
       type="button"
-      className="text-center"
+      className="flex flex-col items-center justify-between"
       onClick={() => handleSelectProfile(id)}
     >
       <picture className="flex bg-error rounded-full overflow-hidden w-20 aspect-square">
         <img src={avatar} alt="" />
       </picture>
-      <span className="inline-block mt-2 font-bold">{name}</span>
+      <span className="inline-block mt-2 font-bold">{nickname}</span>
     </button>
   );
 };
