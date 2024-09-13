@@ -13,6 +13,7 @@ const config: Config = {
           "100": "#1C1C1C",
           "200": "#202020",
           "300": "#232222",
+          "400": "#2B2B2B",
           "500": "#202020"
         },
         success: {
@@ -21,6 +22,9 @@ const config: Config = {
         },
         error: "#FD003D",
         info: "#0093FD",
+        detail: {
+          DEFAULT: "#A6A6A6",
+        }
       },
       backgroundImage: {
         "logo": "url(/images/bg-logo.png)",
