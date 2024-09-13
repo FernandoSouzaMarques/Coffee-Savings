@@ -7,6 +7,7 @@ interface IUserProfile {
   id: string;
   avatar: string;
   name: string;
+  nickname: string;
 }
 
 async function getUserData(id?: string): Promise<IUserProfile | undefined> {
@@ -21,7 +22,7 @@ export default async function Dashboard() {
 
   return (
     <Fragment>
-      <HeadingWrapper name={user?.name ?? ""} />
+      <HeadingWrapper name={user?.nickname ?? ""} />
       <div className="mt-10">
         <p>content...</p>
       </div>
