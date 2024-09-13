@@ -17,6 +17,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
+import { Icon } from "@/app/components/Icon";
 
 interface ISidebarProps {
   avatar: string;
@@ -90,9 +91,7 @@ export const Sidebar: FC<ISidebarProps> = ({ avatar }): JSX.Element => {
           <p className="text-2xl">Coffee Savings</p>
           <img src="/images/logo.svg" alt="Logo coffe savings" />
         </div>
-        <picture className="block bg-error rounded-full overflow-hidden w-10 aspect-square">
-          <img src={avatar} alt="" />
-        </picture>
+        <Icon icon="" size="sm" />
       </div>
 
       <nav className="flex-grow mt-14">
