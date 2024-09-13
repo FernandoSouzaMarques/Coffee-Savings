@@ -37,7 +37,7 @@ export const AddTagForm = () => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
       <input id="name" name="name" type="text" placeholder="name" />
-      <button type="submit">Save</button>
+      <button className="button" type="submit">Save</button>
     </form>
   );
 };

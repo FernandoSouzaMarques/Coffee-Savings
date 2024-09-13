@@ -40,11 +40,11 @@ export const NewProfileForm = () => {
     setOpenProfileModal(false);
   }
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <form autoComplete="off" onSubmit={handleSubmit} className="flex flex-col space-y-4">
       <input id="name" name="name" type="text" placeholder="name" />
       <input id="nickname" name="nickname" type="text" placeholder="nickname" />
       <input id="password" name="password" type="password" placeholder="Password" />
-      <button type="submit">Save</button>
+      <button className="button" type="submit">Save</button>
     </form>
   )
 }
