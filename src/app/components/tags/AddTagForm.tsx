@@ -1,10 +1,9 @@
 "use client";
 
-import { client } from "@/config/client";
 import { FormEvent } from "react";
-import { TagsEnum } from "@/enum/Tags";
 import { useSetRecoilState } from "recoil";
 import { tagModalAtom } from "@/store/atoms/tagModalAtom";
+import { addNewTag } from "@/app/server-actions/addNewTag";
 
 interface IFormField {
   value: string;
@@ -24,14 +23,7 @@ export const AddTagForm = () => {
 
     const name = (fields as unknown as IFormFields)["name"].value;
 
-    await client("/tag", {
-      method: "POST",
-      body: JSON.stringify({ name }),
-      next: {
-        tags: [TagsEnum.TAG]
-      }
-    })
-
+    await addNewTag(JSON.stringify({ name }))
     setOpenTagModal(false);
   }
   return (
