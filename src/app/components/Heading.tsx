@@ -25,7 +25,7 @@ export const Heading: FC<IHeadingProps> = ({
       </div>
       {label && (
         <button
-          className="h-fit bg-success-dark rounded-lg px-3 py-1 flex items-center space-x-1"
+          className="button h-fit"
           onClick={action}
         >
           {icon}
