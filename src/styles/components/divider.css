@@ -1,0 +1,3 @@
+.divider {
+  @apply bg-base-400 my-4 h-0.5;
+}
