@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache";
 
 export async function GET(request: NextRequest) {
   const rawQuery =
-    'SELECT id, name, icon, "closingDate", "expirationDate", "currentInvoice", "accountId" FROM public."CreditCard"';
+    'SELECT id, name, icon, "closingDate", "expirationDate", "currentInvoice", "accountId", "limit" FROM public."CreditCard"';
   const url = new URL(request.url);
   const creditCardId = url.searchParams.get("id");
 
