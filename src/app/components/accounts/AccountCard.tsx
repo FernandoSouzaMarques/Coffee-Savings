@@ -1,3 +1,5 @@
+"use client";
+
 import { formatCurrency } from "@/utils/formatCurrency";
 import clsx from "clsx";
 import { FC } from "react";
@@ -19,8 +21,12 @@ export const AccountCard: FC<IAccountCardProps> = ({
     return "text-info";
   }
 
+  function handleClick() {
+    console.log("edit account")
+  }
+
   return (
-    <div className="flex flex-col paper">
+    <div role="button" onClick={handleClick} className="flex flex-col paper">
       <div className="flex items-center space-x-4">
         <Icon icon="" size="md" />
         <p className="font-medium text-xl">{name}</p>
