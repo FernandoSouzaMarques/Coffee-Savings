@@ -1,7 +1,7 @@
 "use server";
 
 import { client } from "@/config/client";
-import { TagIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon, TagIcon } from "@heroicons/react/24/solid";
 
 interface ITag {
   id: string;
@@ -20,10 +20,12 @@ export const ListTags = async () => {
       {tags.map((tag) => (
         <li
           key={tag.id}
-          className="bg-base-100 px-4 py-2 rounded-lg flex items-center space-x-2"
         >
-          <TagIcon className="w-5 text-base-300" />
-          <p>{tag.name}</p>
+          <button className="bg-base-100 px-4 py-2 rounded-lg flex items-center space-x-2">
+            <TagIcon className="w-5 text-base-300" />
+            <p>{tag.name}</p>
+            <PencilSquareIcon className="w-4 text-white" />
+          </button>
         </li>
       ))}
     </ul>
