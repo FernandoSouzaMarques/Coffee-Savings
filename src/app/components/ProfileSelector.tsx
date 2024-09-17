@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { PagesEnum } from "@/enum/Pages";
 import { useCookies } from "@/app/hooks/useCookies";
 import { Icon } from "@/app/components/Icon";
+import { revalidateDashboard } from "@/app/server-actions/revalidatePaths";
 
 interface IProfileSelector {
   id: string;
@@ -22,6 +23,7 @@ export const ProfileSelector: FC<IProfileSelector> = ({
 
   function handleSelectProfile(id: string) {
     setCookies("userId", id);
+    revalidateDashboard();
     void push(PagesEnum.DASHBOARD);
   }
 
