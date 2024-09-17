@@ -24,13 +24,17 @@ export const ProfileSelector: FC<IProfileSelector> = ({
     setCookies("userId", id);
     void push(PagesEnum.DASHBOARD);
   }
+
+  function getAvatar() {
+    return `/images/profiles/${avatar}.jpg`;
+  }
   return (
     <button
       type="button"
       className="flex flex-col items-center justify-between"
       onClick={() => handleSelectProfile(id)}
     >
-      <Icon icon={avatar} size="lg" />
+      <Icon icon={getAvatar()} size="lg" />
       <span className="inline-block mt-2 font-bold">{nickname}</span>
     </button>
   );

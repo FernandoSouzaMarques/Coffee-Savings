@@ -1,4 +1,4 @@
-"use client";
+"use server";
 
 import { PagesEnum } from "@/enum/Pages";
 import {
@@ -13,15 +13,10 @@ import {
   WrenchScrewdriverIcon,
   UsersIcon,
 } from "@heroicons/react/24/solid";
-import clsx from "clsx";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FC } from "react";
 import { Icon } from "@/app/components/Icon";
-
-interface ISidebarProps {
-  avatar: string;
-}
+import { SidebarItem } from "./SidebarItem";
+import { client } from "@/config/client";
+import { cookies } from "next/headers";
 
 const pages = [
   {
@@ -79,11 +74,16 @@ const actions = [
   },
 ];
 
-export const Sidebar: FC<ISidebarProps> = ({ avatar }): JSX.Element => {
-  const pathname = usePathname();
-  function hasActive(page: PagesEnum) {
-    return page === pathname;
-  }
+async function getAvatar(id?: string): Promise<string | undefined> {
+  if (!id) return;
+  const user = await client(`/users?id=${id}`);
+  return user.avatar;
+}
+export const Sidebar = async (): Promise<JSX.Element> => {
+  const cookieStore = cookies();
+  const loggedUser = cookieStore.get("userId");
+  const avatar = await getAvatar(loggedUser?.value);
+
   return (
     <div className="bg-base-100 p-10 flex flex-col min-h-screen shadow-lg flex-shrink-0">
       <div className="flex items-center space-x-10">
@@ -91,25 +91,14 @@ export const Sidebar: FC<ISidebarProps> = ({ avatar }): JSX.Element => {
           <p className="text-2xl">Coffee Savings</p>
           <img src="/images/logo.svg" alt="Logo coffe savings" />
         </div>
-        <Icon icon="" size="sm" />
+        <Icon icon={`/images/profiles/${avatar}.jpg`} size="sm" />
       </div>
 
       <nav className="flex-grow mt-14">
         <ul className="space-y-2">
           {pages.map((page) => (
             <li key={page.label}>
-              <Link
-                href={page.url}
-                className={clsx(
-                  "flex items-center space-x-4 p-4 rounded-lg transition-colors hover:bg-success-dark/50",
-                  {
-                    "bg-success-dark": hasActive(page.url),
-                  }
-                )}
-              >
-                <span>{page.icon}</span>
-                <p>{page.label}</p>
-              </Link>
+              <SidebarItem {...page} />
             </li>
           ))}
         </ul>
@@ -119,18 +108,7 @@ export const Sidebar: FC<ISidebarProps> = ({ avatar }): JSX.Element => {
         <ul className="space-y-2">
           {actions.map((page) => (
             <li key={page.label}>
-              <Link
-                href={page.url}
-                className={clsx(
-                  "flex items-center space-x-4 p-4 rounded-lg transition-colors hover:bg-success-dark/50",
-                  {
-                    "bg-success-dark": hasActive(page.url),
-                  }
-                )}
-              >
-                <span>{page.icon}</span>
-                <p>{page.label}</p>
-              </Link>
+              <SidebarItem {...page} />
             </li>
           ))}
         </ul>
