@@ -6,7 +6,10 @@ export const useCookies = () => {
       date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
       expires = `; expires=${date.toUTCString()}`;
     }
-    document.cookie = `${name}=${value || ""}${expires}; path=/`;
+
+    if (typeof window !== "undefined") {
+      document.cookie = `${name}=${value || ""}${expires}; path=/`;
+    }
   };
 
   const getCookie = (c_name: string) => {
