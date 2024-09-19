@@ -1,8 +1,9 @@
 "use server";
 
 import { client } from "@/config/client";
+import { PagesEnum } from "@/enum/Pages";
 import { TagsEnum } from "@/enum/Tags";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function addNewTag(payload: BodyInit) {
   await client("/tag", {
@@ -13,4 +14,5 @@ export async function addNewTag(payload: BodyInit) {
     },
   });
   revalidateTag(TagsEnum.TAG);
+  revalidatePath(PagesEnum.TAGS);
 }
