@@ -5,10 +5,12 @@ type TSizeOptions = "sm" | "md" | "lg";
 
 interface IIconProps {
   icon: string;
+  bgColor?: string;
+  applyPadding?: boolean;
   size: TSizeOptions;
 }
 
-export const Icon: FC<IIconProps> = ({ icon, size }) => {
+export const Icon: FC<IIconProps> = ({ icon, size, applyPadding, bgColor }) => {
   function getSize() {
     const classesBySize = {
       sm: "w-10",
@@ -21,9 +23,13 @@ export const Icon: FC<IIconProps> = ({ icon, size }) => {
   return (
     <picture
       className={clsx(
-        "aspect-square block bg-base-500 rounded-full overflow-hidden ring-info/20 ring-2 ring-inset",
+        "aspect-square block rounded-full overflow-hidden",
+        {"p-1.5" : applyPadding,  "bg-base-500 ring-info/20 ring-2 ring-inset" : !bgColor},
         getSize()
       )}
+      style={{
+        background: bgColor ?? ""
+      }}
     >
       <img src={icon} alt="" className="object-cover object-center" />
     </picture>
