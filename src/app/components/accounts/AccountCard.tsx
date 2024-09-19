@@ -28,7 +28,7 @@ export const AccountCard: FC<IAccountCardProps> = ({
   return (
     <div role="button" onClick={handleClick} className="flex flex-col paper">
       <div className="flex items-center space-x-4">
-        <Icon icon="" size="md" />
+        <Icon icon={`/images/banks/${icon}.webp`} size="md" />
         <p className="font-medium text-xl">{name}</p>
       </div>
       <span className="divider" />
