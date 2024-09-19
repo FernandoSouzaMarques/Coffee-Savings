@@ -10,6 +10,8 @@ interface ISubCategory {
 interface ICategory {
   id: string,
   name: string,
+  icon: string,
+  color: string,
   isExpense: boolean,
   subCategories: ISubCategory[]
 }
@@ -17,6 +19,8 @@ interface ICategory {
 interface IQueryCategory {
   id: string,
   name: string,
+  icon: string,
+  color: string,
   isExpense: boolean,
   subCategoryId: string,
   subCategoryName: string,
@@ -24,7 +28,7 @@ interface IQueryCategory {
 
 export async function GET(request: NextRequest) {
   const rawQuery =
-    'SELECT c.id, c.name, c."isExpense", s.id as "subCategoryId", s.name as "subCategoryName" FROM public."Category" c LEFT JOIN public."SubCategory" s ON c.id = s."categoryId"';
+    'SELECT c.id, c.name, c.icon, c.color, c."isExpense", s.id as "subCategoryId", s.name as "subCategoryName" FROM public."Category" c LEFT JOIN public."SubCategory" s ON c.id = s."categoryId"';
   const url = new URL(request.url);
   const categoryId = url.searchParams.get("id");
 
@@ -42,13 +46,13 @@ export async function GET(request: NextRequest) {
         category = {
           id: curr.id,
           name: curr.name,
+          icon: curr.icon,
+          color: curr.color,
           isExpense: curr.isExpense,
           subCategories: [],
         };
         acc.push(category);
       }
-
-      console.log(curr)
 
       if (curr.subCategoryId) {
         category.subCategories.push({
