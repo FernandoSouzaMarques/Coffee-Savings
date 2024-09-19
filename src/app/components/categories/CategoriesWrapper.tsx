@@ -9,6 +9,8 @@ interface ISubCategories {
 interface ICategories {
   id: string;
   name: string,
+  icon: string;
+  color: string;
   isExpense: boolean;
   subCategories: ISubCategories[]
 }

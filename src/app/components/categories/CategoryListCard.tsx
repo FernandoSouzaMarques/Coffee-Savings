@@ -5,6 +5,8 @@ import { Icon } from "../Icon";
 interface ICategory {
   id: string;
   name: string;
+  icon: string;
+  color: string;
   subCategories: any[];
 }
 
@@ -45,14 +47,14 @@ export const CategoryListCard: FC<CategoryListCardProps> = ({
         {categories.map((cat) => (
           <li key={cat.id} className="py-1 last:pb-0 first:pt-0">
             <div className="flex items-center">
-              <Icon icon="" size="sm" />
+              <Icon bgColor={cat.color} applyPadding icon={`/images/categories/${cat.icon}`} size="sm" />
               <p className="ml-4">{cat.name}</p>
             </div>
             {cat.subCategories && (
               <ul className="ml-10">
                 {cat.subCategories.map((sub) => (
                   <li key={sub.id} className="flex items-center py-1">
-                    <span className="block rounded-full w-2 aspect-square bg-info" />
+                    <span className="block rounded-full w-2 aspect-square" style={{ background: cat.color ?? "#0093FD" }} />
                     <p className="ml-2">{sub.name}</p>
                   </li>
                 ))}
