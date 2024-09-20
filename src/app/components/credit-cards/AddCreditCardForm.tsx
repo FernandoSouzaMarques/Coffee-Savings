@@ -8,7 +8,7 @@ import { creditCardModalAtom } from "@/store/atoms/creditCardModalAtom";
 import { useCookies } from "@/app/hooks/useCookies";
 import { Icon } from "@/app/components/Icon";
 import { BankSelector } from "@/app/components/BankSelector";
-import clsx from "clsx";
+import { SelectWithIcon } from "@/app/components/SelectWithIcon";
 
 interface IFormField {
   value: string;
@@ -46,12 +46,6 @@ export const AddCreditCardForm: FC<IAddCreditCardFormProps> = ({
     return `/images/banks/${icon}.webp`;
   }, [icon]);
 
-  const currentSelectedAccountIcon = useMemo(() => {
-    const icon = accounts.find((a) => a.name === selectedAccount)?.icon;
-    if (!icon) return ""
-    return `/images/banks/${icon}.webp`;
-  }, [selectedAccount, accounts]);
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -63,7 +57,7 @@ export const AddCreditCardForm: FC<IAddCreditCardFormProps> = ({
     const expirationDate = (fields as unknown as IFormFields)["expirationDate"].value;
 
     const userId = getCookie("userId");
-    const accountId = accounts.find((a) => a.name === selectedAccount)?.id ?? null;
+    const accountId = selectedAccount;
 
     await client("/credit-card", {
       method: "POST",
@@ -97,6 +91,13 @@ export const AddCreditCardForm: FC<IAddCreditCardFormProps> = ({
     setSelectedAccount(selected);
   }
 
+  function getFormattedAccount() {
+    return accounts.map((account) => ({
+      ...account,
+      icon: `/images/banks/${account.icon}.webp`,
+    }))
+  }
+
   return (
     <div className="max-w-80 w-full max-h-[31.25rem] overflow-auto custom-scrollbar transition-all">
       {showIconList && <BankSelector onSelect={handleSelectIcon} />}
@@ -114,8 +115,8 @@ export const AddCreditCardForm: FC<IAddCreditCardFormProps> = ({
             <Icon icon={currentIcon} size="md" />
             <span className="text-sm text-gray-600 mt-1">Icon</span>
           </button>
-          <input id="name" name="name" type="text" placeholder="name" />
-          <input id="limit" name="limit" type="tel" placeholder="limit" />
+          <input autoComplete="accountName" id="name" name="name" type="text" placeholder="name" />
+          <input autoComplete="limit" id="limit" name="limit" type="tel" placeholder="limit" />
           <div className="grid grid-cols-2 gap-4">
             <input
               autoComplete="closingDate"
@@ -133,31 +134,7 @@ export const AddCreditCardForm: FC<IAddCreditCardFormProps> = ({
             />
           </div>
 
-          <div className="relative">
-            {!!currentSelectedAccountIcon && (
-              <picture>
-                <img
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-6 aspect-square object-center object-cover rounded-full"
-                  src={currentSelectedAccountIcon}
-                  alt=""
-                />
-              </picture>
-            )}
-            <input
-              id="paymentAccount"
-              name="paymentAccount"
-              type="text"
-              placeholder="payment account"
-              list="accounts"
-              onChange={(e) => handleSelectAccount(e.target.value)}
-              className={clsx({ "pl-10": !!currentSelectedAccountIcon })}
-            />
-          </div>
-          <datalist id="accounts">
-            {accounts.map((account) => (
-              <option key={account.id} value={account.name} />
-            ))}
-          </datalist>
+          <SelectWithIcon onChange={handleSelectAccount} list={getFormattedAccount()} />
 
           <p className="flex-grow text-gray-400 text-sm bg-base-500 p-2 border-l-4 border-info leading-none opacity-80">
             <small>
