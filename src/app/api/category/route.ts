@@ -81,8 +81,8 @@ export async function POST(request: NextRequest) {
   try {
     await trx.query("BEGIN");
     const queryText =
-      'INSERT INTO public."Category"(name, icon, "isExpense") VALUES ($1, $2, $3)';
-    const values = [body.name, body.icon, body.isExpense];
+      'INSERT INTO public."Category"(name, icon, "isExpense", color) VALUES ($1, $2, $3, $4)';
+    const values = [body.name, body.icon, body.isExpense, body.color];
 
     await trx.query(queryText, values);
 

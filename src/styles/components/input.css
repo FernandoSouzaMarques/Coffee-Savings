@@ -21,6 +21,11 @@ input[type="password"]::-ms-reveal {
   filter: invert(100%);
 }
 
+input[type="checkbox"],
+input[type="radio"] {
+  @apply bg-base-300 rounded-lg w-4 h-4 focus:ring-0 outline-none overflow-hidden;
+}
+
 input[type="checkbox"] {
-  @apply bg-base-300 accent-info rounded-lg w-4 h-4 focus:ring-0 outline-none overflow-hidden;
+  @apply accent-info;
 }
