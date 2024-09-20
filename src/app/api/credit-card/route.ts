@@ -32,7 +32,6 @@ export async function POST(request: NextRequest) {
     limit: body.limit,
     closingDate: body.closingDate,
     expirationDate: body.expirationDate,
-    currentInvoice: body.currentInvoice,
     userId: body.userId,
     accountId: body.accountId
   };
@@ -40,7 +39,7 @@ export async function POST(request: NextRequest) {
   try {
     await trx.query("BEGIN");
     const queryText =
-      'INSERT INTO public."CreditCard"(name, icon, "limit", "closingDate", "expirationDate", "currentInvoice", "userId", "accountId") VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
+      'INSERT INTO public."CreditCard"(name, icon, "limit", "closingDate", "expirationDate", "userId", "accountId") VALUES ($1, $2, $3, $4, $5, $6, $7)';
     const values = Object.values(payload);
 
     await trx.query(queryText, values);

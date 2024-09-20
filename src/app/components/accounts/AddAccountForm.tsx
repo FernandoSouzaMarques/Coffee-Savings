@@ -6,8 +6,8 @@ import { TagsEnum } from "@/enum/Tags";
 import { useSetRecoilState } from "recoil";
 import { accountModalAtom } from "@/store/atoms/accountModalAtom";
 import { useCookies } from "@/app/hooks/useCookies";
-import { bankAgencies } from "@/app/data/bank-agencies";
-import { Icon } from "../Icon";
+import { Icon } from "@/app/components/Icon";
+import { BankSelector } from "@/app/components/BankSelector";
 
 interface IFormField {
   value: string;
@@ -70,25 +70,7 @@ export const AddAccountForm = () => {
   return (
     <div className="max-w-80 w-full max-h-96 overflow-auto custom-scrollbar transition-all">
       {showIconList && (
-        <div>
-          <ul className="w-full grid grid-cols-3 gap-4">
-            {bankAgencies.map((bank) => (
-              <li key={`profile-${bank.name}`}>
-                <button
-                  type="button"
-                  className="rounded-full overflow-hidden bg-white/20 w-full aspect-square"
-                  onClick={() => handleSelectIcon(bank.icon)}
-                >
-                  <img
-                    className="aspect-square w-full"
-                    src={`/images/banks/${bank.icon}.webp`}
-                    alt=""
-                  />
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <BankSelector onSelect={handleSelectIcon} />
       )}
 
       {!showIconList && (

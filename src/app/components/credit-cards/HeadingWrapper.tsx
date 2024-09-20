@@ -2,10 +2,14 @@
 
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Heading } from "@/app/components/Heading";
+import { useSetRecoilState } from "recoil";
+import { creditCardModalAtom } from "@/store/atoms/creditCardModalAtom";
 
 export const HeadingWrapper = () => {
-  function action() {
-    console.log("Action");
+  const setOpenTagModal = useSetRecoilState(creditCardModalAtom);
+  
+  function handleOpenCreditCardModal() {
+    setOpenTagModal(true);
   }
   return (
     <Heading
@@ -13,7 +17,7 @@ export const HeadingWrapper = () => {
       description="Here are your cards."
       label="Add"
       icon={<PlusIcon className="w-5" />}
-      action={action}
+      action={handleOpenCreditCardModal}
     />
   );
 };
