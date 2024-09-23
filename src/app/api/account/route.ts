@@ -3,8 +3,9 @@ import { client, trx } from "@/lib/connect";
 import { revalidateTag } from "next/cache";
 
 export async function GET(request: NextRequest) {
+  const userId = request.nextUrl.searchParams.get("userId");
   const rawQuery =
-    'SELECT id, name, balance, icon, "hideValue" FROM public."Account"';
+    `SELECT id, name, balance, icon, "hideValue" FROM public."Account" WHERE "userId" = ${userId}`;
   const url = new URL(request.url);
   const accountId = url.searchParams.get("id");
 

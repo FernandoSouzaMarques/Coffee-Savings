@@ -3,6 +3,7 @@ import { CreditCardList } from "@/app/components/credit-cards/CreditCardList";
 import { HeadingWrapper } from "@/app/components/credit-cards/HeadingWrapper";
 import { AddCreditCardModal } from "@/app/components/credit-cards/AddCreditCardModal";
 import { client } from "@/config/client";
+import { cookies } from "next/headers";
 
 
 interface IAccount {
@@ -14,13 +15,16 @@ interface IAccount {
 }
 
 
-async function getAccounts(): Promise<IAccount[]> {
-  const response = client("/account");
+async function getAccounts(userId?: string): Promise<IAccount[]> {
+  const response = client(`/account?userId=${userId}`);
   return response ?? [];
 }
 
 export default async function CreditCards() {
-  const accounts = await getAccounts();
+  const cookieStore = cookies();
+  const loggedUser = cookieStore.get("userId");
+  const accounts = await getAccounts(loggedUser?.value);
+
   return (
     <Fragment>
       <HeadingWrapper />
