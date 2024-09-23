@@ -2,9 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { client, trx } from "@/lib/connect";
 import { revalidateTag } from "next/cache";
 
+interface ICreditCard {
+  id: string;
+  name: string;
+  icon: string;
+  closingDate: string;
+  expirationDate: string;
+  accountId: string;
+  limit: number;
+}
+
 export async function GET(request: NextRequest) {
   const rawQuery =
-    'SELECT id, name, icon, "closingDate", "expirationDate", "currentInvoice", "accountId", "limit" FROM public."CreditCard"';
+    'SELECT id, name, icon, "closingDate", "expirationDate", "accountId", "limit" FROM public."CreditCard" ORDER BY "createdAt"';
   const url = new URL(request.url);
   const creditCardId = url.searchParams.get("id");
 
@@ -12,7 +22,16 @@ export async function GET(request: NextRequest) {
     const response = await client.query(
       `${rawQuery} ${creditCardId ? `WHERE id = ${creditCardId}` : ""}`
     );
-    return NextResponse.json(!!creditCardId ? response.rows[0] : response.rows);
+
+    const data = !!creditCardId ? response.rows[0] : response.rows;
+
+    if (!!creditCardId) {
+      return NextResponse.json({
+        ...data,
+        currentInvoice: 0,
+      })
+    }
+    return NextResponse.json(data.map((i: ICreditCard) => ({...i, currentInvoice: 0})));
   } catch (err) {
     return NextResponse.json(
       { error: "Error retrieving credit card data", details: err },
