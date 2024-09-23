@@ -46,6 +46,11 @@ export const AddCreditCardForm: FC<IAddCreditCardFormProps> = ({
     return `/images/banks/${icon}.webp`;
   }, [icon]);
 
+  function getDate(day: string) {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), Number(day)).toISOString()
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -65,8 +70,8 @@ export const AddCreditCardForm: FC<IAddCreditCardFormProps> = ({
         name,
         icon,
         limit,
-        closingDate,
-        expirationDate,
+        closingDate: getDate(closingDate),
+        expirationDate: getDate(expirationDate),
         userId,
         accountId,
       }),
