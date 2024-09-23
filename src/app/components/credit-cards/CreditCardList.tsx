@@ -1,5 +1,6 @@
 import { client } from "@/config/client";
 import { CreditCardCard } from "@/app/components/credit-cards/CreditCardCard";
+import { cookies } from "next/headers";
 
 interface ICreditCard {
   id: number,
@@ -12,13 +13,15 @@ interface ICreditCard {
   accountId: 1
 }
 
-async function getCreditCards(): Promise<ICreditCard[]> {
-  const response = client("/credit-card");
+async function getCreditCards(userId?: string): Promise<ICreditCard[]> {
+  const response = client(`/credit-card?userId=${userId}`);
   return response ?? [];
 }
 
 export const CreditCardList = async () => {
-  const creditCards = await getCreditCards();
+  const cookieStore = cookies();
+  const loggedUser = cookieStore.get("userId");
+  const creditCards = await getCreditCards(loggedUser?.value);
 
   return (
     <ul className="grid gap-4">

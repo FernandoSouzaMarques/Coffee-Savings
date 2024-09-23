@@ -13,14 +13,16 @@ interface ICreditCard {
 }
 
 export async function GET(request: NextRequest) {
+  const userId = request.nextUrl.searchParams.get("userId");
+
   const rawQuery =
-    'SELECT id, name, icon, "closingDate", "expirationDate", "accountId", "limit" FROM public."CreditCard" ORDER BY "createdAt"';
+    `SELECT id, name, icon, "closingDate", "expirationDate", "accountId", "limit" FROM public."CreditCard" WHERE "userId" = ${userId}`;
   const url = new URL(request.url);
   const creditCardId = url.searchParams.get("id");
 
   try {
     const response = await client.query(
-      `${rawQuery} ${creditCardId ? `WHERE id = ${creditCardId}` : ""}`
+      `${rawQuery} ${creditCardId ? ` AND WHERE id = ${creditCardId}` : ""} ORDER BY "createdAt"`
     );
 
     const data = !!creditCardId ? response.rows[0] : response.rows;
@@ -33,6 +35,7 @@ export async function GET(request: NextRequest) {
     }
     return NextResponse.json(data.map((i: ICreditCard) => ({...i, currentInvoice: 0})));
   } catch (err) {
+    console.error(err)
     return NextResponse.json(
       { error: "Error retrieving credit card data", details: err },
       { status: 500 }
