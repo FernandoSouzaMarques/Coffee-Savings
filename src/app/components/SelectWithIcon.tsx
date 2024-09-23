@@ -26,10 +26,11 @@ interface ISelectData {
 
 interface ISelectWithIconProps {
   list: IItem[];
+  placeholder?: string;
   onChange: (id: string) => void;
 }
 
-export const SelectWithIcon: FC<ISelectWithIconProps> = ({ list, onChange }) => {
+export const SelectWithIcon: FC<ISelectWithIconProps> = ({ list, placeholder = "Selecione", onChange }) => {
   const [selected, setSelected] = useState<IItem | null>(null);
 
   function handleChange(item: ISelectData) {
@@ -57,7 +58,7 @@ export const SelectWithIcon: FC<ISelectWithIconProps> = ({ list, onChange }) => 
                 !!selected?.name ? "text-white" : "text-gray-600"
               )}
             >
-              {selected?.name ?? "Selecione"}
+              {selected?.name ?? placeholder }
             </span>
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
