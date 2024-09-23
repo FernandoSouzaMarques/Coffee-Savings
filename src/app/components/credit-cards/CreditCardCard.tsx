@@ -48,7 +48,7 @@ export const CreditCardCard: FC<ICreditCardCardProps> = ({
   return (
     <div role="button" onClick={handleClick} className="flex flex-col paper">
       <div className="flex items-center space-x-4">
-        <Icon icon="" size="md" />
+        <Icon icon={`/images/banks/${icon}.webp`} size="md" />
         <div>
           <p className="font-medium text-xl">{name}</p>
           <p className="text-base text-detail">
