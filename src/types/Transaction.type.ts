@@ -1,0 +1,1 @@
+export type TTransaction = "expenditure" | "recipe" | "transfer";

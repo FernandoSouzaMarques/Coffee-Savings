@@ -14,6 +14,7 @@ import clsx from "clsx";
 interface IItem {
   id: string;
   icon: string;
+  color?: string;
   name: string;
 }
 
@@ -44,11 +45,11 @@ export const SelectWithIcon: FC<ISelectWithIconProps> = ({ list, placeholder = "
         <ListboxButton className="relative w-full cursor-default rounded-md bg-base-500 py-1.5 px-4 pr-10 text-left text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-info sm:text-sm sm:leading-6">
           <span className="flex items-center min-h-8">
             {selected?.icon && (
-              <picture>
+              <picture className="rounded-full overflow-hidden" style={{background: selected.color ?? ""}}>
                 <img
                   alt=""
                   src={selected?.icon}
-                  className="h-5 w-5 flex-shrink-0 rounded-full"
+                  className={clsx("h-5 w-5 flex-shrink-0 rounded-full", { "p-0.5" : selected.color, "opacity-0": !selected.icon})}
                 />
               </picture>
             )}
@@ -80,11 +81,11 @@ export const SelectWithIcon: FC<ISelectWithIconProps> = ({ list, placeholder = "
               className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-info data-[focus]:text-white"
             >
               <div className="flex items-center">
-                <picture>
+                <picture className="rounded-full overflow-hidden" style={{background: item.color ?? ""}}>
                   <img
                     alt=""
                     src={item.icon}
-                    className="h-5 w-5 flex-shrink-0 rounded-full"
+                    className={clsx("h-5 w-5 flex-shrink-0 rounded-full", { "p-0.5" : item.color, "opacity-0": !item.icon})}
                   />
                 </picture>
                 <span className="ml-3 block truncate font-normal group-data-[selected]:font-semibold text-white">
