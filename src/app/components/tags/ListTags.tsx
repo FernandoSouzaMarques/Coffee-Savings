@@ -1,12 +1,8 @@
 "use server";
 
 import { client } from "@/config/client";
+import { ITag } from "@/types/Tag.type";
 import { PencilSquareIcon, TagIcon } from "@heroicons/react/24/solid";
-
-interface ITag {
-  id: string;
-  name: string;
-}
 
 async function getTags(): Promise<ITag[]> {
   const response = client("/tag");

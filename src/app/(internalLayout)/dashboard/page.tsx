@@ -2,15 +2,9 @@ import { Fragment } from "react";
 import { cookies } from "next/headers";
 import { HeadingWrapper } from "@/app/components/dashboard/HeadingWrapper";
 import { client } from "@/config/client";
+import { IUser } from "@/types/User.type";
 
-interface IUserProfile {
-  id: string;
-  avatar: string;
-  name: string;
-  nickname: string;
-}
-
-async function getUserData(id?: string): Promise<IUserProfile | undefined> {
+async function getUserData(id?: string): Promise<IUser | undefined> {
   if (!id) return;
   return await client(`/users?id=${id}`);
 }

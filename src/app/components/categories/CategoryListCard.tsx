@@ -1,14 +1,7 @@
 import clsx from "clsx";
 import { FC } from "react";
 import { Icon } from "../Icon";
-
-interface ICategory {
-  id: string;
-  name: string;
-  icon: string;
-  color: string;
-  subCategories: any[];
-}
+import { ICategory } from "@/types/Category.type";
 
 interface CategoryListCardProps {
   group: "expenditure" | "recipe";

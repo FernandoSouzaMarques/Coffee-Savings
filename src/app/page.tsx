@@ -6,15 +6,9 @@ import { ProfileList } from "@/app/components/ProfileList";
 import { client } from "@/config/client";
 import { AddProfileButton } from "@/app/components/AddProfileButton";
 import { AddProfileModal } from "@/app/components/AddProfileModal";
+import { IUser } from "@/types/User.type";
 
-interface IUserProfile {
-  id: string;
-  name: string;
-  nickname: string;
-  avatar: string;
-}
-
-async function getUsers(): Promise<IUserProfile[]> {
+async function getUsers(): Promise<IUser[]> {
   return await client("/users");
 }
 

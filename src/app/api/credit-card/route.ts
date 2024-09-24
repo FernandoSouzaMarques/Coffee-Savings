@@ -1,16 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { client, trx } from "@/lib/connect";
 import { revalidateTag } from "next/cache";
-
-interface ICreditCard {
-  id: string;
-  name: string;
-  icon: string;
-  closingDate: string;
-  expirationDate: string;
-  accountId: string;
-  limit: number;
-}
+import { ICreditCard } from "@/types/CreditCard.type";
 
 export async function GET(request: NextRequest) {
   const userId = request.nextUrl.searchParams.get("userId");

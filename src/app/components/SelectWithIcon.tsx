@@ -41,7 +41,7 @@ export const SelectWithIcon: FC<ISelectWithIconProps> = ({ list, placeholder = "
   return (
     <Listbox value={selected} onChange={handleChange}>
       <div className="relative mt-2">
-        <ListboxButton className="relative w-full cursor-default rounded-md bg-base-500 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-info sm:text-sm sm:leading-6">
+        <ListboxButton className="relative w-full cursor-default rounded-md bg-base-500 py-1.5 px-4 pr-10 text-left text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-info sm:text-sm sm:leading-6">
           <span className="flex items-center min-h-8">
             {selected?.icon && (
               <picture>
@@ -54,8 +54,8 @@ export const SelectWithIcon: FC<ISelectWithIconProps> = ({ list, placeholder = "
             )}
             <span
               className={clsx(
-                "ml-3 block truncate text-sm",
-                !!selected?.name ? "text-white" : "text-gray-600"
+                "block truncate text-sm",
+                !!selected?.name ? "text-white ml-3" : "text-gray-600"
               )}
             >
               {selected?.name ?? placeholder }

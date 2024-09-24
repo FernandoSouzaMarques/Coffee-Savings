@@ -4,16 +4,7 @@ import { HeadingWrapper } from "@/app/components/credit-cards/HeadingWrapper";
 import { AddCreditCardModal } from "@/app/components/credit-cards/AddCreditCardModal";
 import { client } from "@/config/client";
 import { cookies } from "next/headers";
-
-
-interface IAccount {
-  id: string;
-  name: string;
-  balance: number;
-  icon: string;
-  hideValue: boolean;
-}
-
+import { IAccount } from "@/types/Account.type";
 
 async function getAccounts(userId?: string): Promise<IAccount[]> {
   const response = client(`/account?userId=${userId}`);

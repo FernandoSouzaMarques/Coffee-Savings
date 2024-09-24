@@ -1,17 +1,7 @@
 import { client } from "@/config/client";
 import { CreditCardCard } from "@/app/components/credit-cards/CreditCardCard";
 import { cookies } from "next/headers";
-
-interface ICreditCard {
-  id: number,
-  name: string,
-  icon: string,
-  closingDate: string,
-  expirationDate: string,
-  currentInvoice: number,
-  limit: number,
-  accountId: 1
-}
+import { ICreditCard } from "@/types/CreditCard.type";
 
 async function getCreditCards(userId?: string): Promise<ICreditCard[]> {
   const response = client(`/credit-card?userId=${userId}`);

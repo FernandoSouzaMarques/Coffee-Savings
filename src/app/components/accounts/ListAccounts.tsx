@@ -1,14 +1,7 @@
 import { client } from "@/config/client";
 import { AccountCard } from "@/app/components/accounts/AccountCard";
 import { cookies } from "next/headers";
-
-interface IAccount {
-  id: string;
-  name: string;
-  balance: number;
-  icon: string;
-  hideValue: boolean;
-}
+import { IAccount } from "@/types/Account.type";
 
 async function getAccounts(userId?: string): Promise<IAccount[]> {
   const response = client(`/account?userId=${userId}`);

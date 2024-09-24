@@ -6,17 +6,9 @@ import { FC } from "react";
 import { Icon } from "@/app/components/Icon";
 import { getOrdinalSuffix } from "@/utils/getOrdinalSuffix";
 import { ProgressBar } from "@/app/components/ProgressBar";
+import { ICreditCard } from "@/types/CreditCard.type";
 
-interface ICreditCardCardProps {
-  id: number;
-  name: string;
-  icon: string;
-  closingDate: string;
-  expirationDate: string;
-  currentInvoice: number;
-  limit: number;
-  accountId: 1;
-}
+interface ICreditCardCardProps extends ICreditCard {}
 
 export const CreditCardCard: FC<ICreditCardCardProps> = ({
   id,

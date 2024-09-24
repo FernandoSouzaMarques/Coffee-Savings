@@ -3,14 +3,9 @@
 import { Dialog } from "@/app/components/Dialog";
 import { AddCreditCardForm } from "@/app/components/credit-cards/AddCreditCardForm";
 import { creditCardModalAtom } from "@/store/atoms/creditCardModalAtom";
+import { IAccount } from "@/types/Account.type";
 import { FC } from "react";
 import { useRecoilState } from "recoil";
-
-interface IAccount {
-  id: string;
-  name: string;
-  icon: string;
-}
 
 interface IAddCreditCardModalProps {
   accounts: IAccount[]

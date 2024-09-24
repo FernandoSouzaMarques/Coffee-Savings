@@ -1,21 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { client, trx } from "@/lib/connect";
 import { revalidateTag } from "next/cache";
-
-interface ISubCategory {
-  id: string,
-  name: string,
-}
-
-interface ICategory {
-  id: string,
-  name: string,
-  icon: string,
-  color: string,
-  isExpense: boolean,
-  subCategories: ISubCategory[]
-}
-
+import { ICategory } from "@/types/Category.type";
 interface IQueryCategory {
   id: string,
   name: string,

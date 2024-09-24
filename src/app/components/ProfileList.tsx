@@ -3,19 +3,13 @@
 import { FC } from "react";
 import { ProfileSelector } from "@/app/components/ProfileSelector";
 import { useCookies } from "@/app/hooks/useCookies";
+import { IUser } from "@/types/User.type";
 
-interface IProfile {
-  id: string;
-  name: string;
-  nickname: string;
-  avatar: string;
+interface IProfileListProps {
+  list: IUser[];
 }
 
-interface IProfileList {
-  list: IProfile[];
-}
-
-export const ProfileList: FC<IProfileList> = ({ list }): JSX.Element => {
+export const ProfileList: FC<IProfileListProps> = ({ list }): JSX.Element => {
   const {setCookies} = useCookies();
 
   function selectOnlyProfile() {

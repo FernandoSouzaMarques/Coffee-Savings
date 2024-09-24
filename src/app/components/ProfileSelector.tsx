@@ -7,13 +7,13 @@ import { useCookies } from "@/app/hooks/useCookies";
 import { Icon } from "@/app/components/Icon";
 import { revalidateDashboard } from "@/app/server-actions/revalidatePaths";
 
-interface IProfileSelector {
+interface IProfileSelectorProps {
   id: string;
   avatar: string;
   nickname: string;
 }
 
-export const ProfileSelector: FC<IProfileSelector> = ({
+export const ProfileSelector: FC<IProfileSelectorProps> = ({
   id,
   avatar,
   nickname

@@ -9,6 +9,7 @@ import { useCookies } from "@/app/hooks/useCookies";
 import { Icon } from "@/app/components/Icon";
 import { BankSelector } from "@/app/components/BankSelector";
 import { SelectWithIcon } from "@/app/components/SelectWithIcon";
+import { IAccount } from "@/types/Account.type";
 
 interface IFormField {
   value: string;
@@ -21,12 +22,6 @@ interface IFormFields {
   closingDate: IFormField;
   expirationDate: IFormField;
   userId: IFormField;
-}
-
-interface IAccount {
-  id: string;
-  name: string;
-  icon: string;
 }
 
 interface IAddCreditCardFormProps {

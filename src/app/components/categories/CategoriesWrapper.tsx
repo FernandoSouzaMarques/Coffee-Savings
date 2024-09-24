@@ -1,22 +1,9 @@
 import { CategoryListCard } from "@/app/components/categories/CategoryListCard";
 import { client } from "@/config/client";
-
-interface ISubCategories {
-  id: string;
-  name: string;
-}
-
-interface ICategories {
-  id: string;
-  name: string,
-  icon: string;
-  color: string;
-  isExpense: boolean;
-  subCategories: ISubCategories[]
-}
+import { ICategory } from "@/types/Category.type";
 
 async function getCategories() {
-  const categories: ICategories[] = await client("/category");
+  const categories: ICategory[] = await client("/category");
 
   if (!categories) return { expenditure: [], recipe: []}
 
